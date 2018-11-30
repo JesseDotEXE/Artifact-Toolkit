@@ -1,0 +1,57 @@
+<div>
+  <br>
+  <h2>Game Tracker</h2>
+  <mat-card>
+    <button mat-raised-button color="primary">
+      Add New Game
+    </button>
+    <br><br>
+    <mat-divider></mat-divider>
+    <br>
+    <!--DataSource opens a stream that connects to the data.-->
+    <table mat-table [dataSource]="gameRecords">
+      <ng-container matColumnDef="date">
+          <th mat-header-cell class="small-cell" *matHeaderCellDef> Date </th>
+          <td mat-cell class="small-cell" *matCellDef="let element"> {{element.date}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="matchType">
+        <th mat-header-cell class="small-cell" *matHeaderCellDef> Match Type </th>
+        <td mat-cell class="small-cell" *matCellDef="let element"> {{element.matchType}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="deck">
+        <th mat-header-cell class="small-cell" *matHeaderCellDef> Deck </th>
+        <td mat-cell class="small-cell" *matCellDef="let element"> {{element.deck}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="oppDeck">
+        <th mat-header-cell class="small-cell" *matHeaderCellDef> Opponent Deck </th>
+        <td mat-cell class="small-cell" *matCellDef="let element"> {{element.oppDeck}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="outcome">
+        <th mat-header-cell class="small-cell" small-cell *matHeaderCellDef> Outcome </th>
+        <td mat-cell class="small-cell" *matCellDef="let element"> {{element.outcome}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="notes">
+        <th mat-header-cell class="big-cell" *matHeaderCellDef> Notes </th>
+        <td mat-cell class="big-cell" *matCellDef="let element"> {{element.notes}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell class="medium-cell" *matHeaderCellDef> Actions </th>
+        <td mat-cell class="medium-cell" *matCellDef>
+            <button mat-raised-button style="margin-right: 10px" color="primary"> Edit </button>            
+            <button mat-raised-button color="warn"> Delete </button>
+        </td>
+      </ng-container>
+
+      <!--Holds variables to dynamically fill the above definitions for all the records returned.-->
+      <!--tableColumns is pulled from the component,-->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card>
+</div>

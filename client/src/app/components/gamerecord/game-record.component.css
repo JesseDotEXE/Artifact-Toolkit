@@ -1,0 +1,39 @@
+table {
+    width: 100%;
+}
+
+.small-cell {
+    width: 10%;
+    overflow: hidden; 
+    padding-left: 5px;
+    padding-right: 5px;  
+}
+
+.medium-cell {
+    width: 15%;
+    overflow: hidden; 
+    padding-left: 5px;
+    padding-right: 5px;  
+}
+
+.big-cell {
+    width: 35%;
+    overflow: hidden;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+th {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+td {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+tr {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
