@@ -5,8 +5,8 @@ import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from "@angular/router";
 import { CollectionComponent } from './components/collection/collection.component';
-import { GameRecordComponent } from './components/gamerecord/game-record.component';
-import { GameRecordService } from './services/gamerecord/game-record.service';
+import { GameRecordComponent } from './components/game-record/game-record.component';
+import { GameRecordService } from './services/game-record/game-record.service';
 import { CardCollectionService } from './services/collection/card-collection.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule,
@@ -14,6 +14,7 @@ import { MatToolbarModule,
          MatDividerModule,
          MatTableModule,
          MatCardModule } from "@angular/material";
+import { GameRecordEditDialogComponent } from './components/game-record-edit-dialog/game-record-edit-dialog.component';
 
 const routes: Routes = [
   { path: 'collection', component: CollectionComponent },
@@ -25,7 +26,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     CollectionComponent,
-    GameRecordComponent
+    GameRecordComponent,
+    GameRecordEditDialogComponent
   ],
   imports: [
     BrowserModule,

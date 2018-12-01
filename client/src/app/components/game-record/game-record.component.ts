@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GameRecord } from '../../services/gamerecord/game-record.model';
-import { GameRecordService } from '../../services/gamerecord/game-record.service';
+import { GameRecord } from '../../services/game-record/game-record.model';
+import { GameRecordService } from '../../services/game-record/game-record.service';
 import { Router } from '../../../../node_modules/@angular/router';
 
 @Component({
