@@ -22,6 +22,7 @@ import { MatToolbarModule,
          MatIconModule} from "@angular/material";
 import { GameRecordEditDialogComponent } from './components/game-record-edit-dialog/game-record-edit-dialog.component';
 import { GameRecordCreateDialogComponent } from './components/game-record-create-dialog/game-record-create-dialog.component';
+import { CardComponent } from './components/card/card.component';
 
 const routes: Routes = [
   { path: 'collection', component: CollectionComponent },
@@ -35,7 +36,8 @@ const routes: Routes = [
     CollectionComponent,
     GameRecordComponent,
     GameRecordEditDialogComponent,
-    GameRecordCreateDialogComponent
+    GameRecordCreateDialogComponent,
+    CardComponent
   ],
   entryComponents: [
     GameRecordEditDialogComponent,
