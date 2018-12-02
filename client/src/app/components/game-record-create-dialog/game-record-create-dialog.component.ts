@@ -35,7 +35,7 @@ export class GameRecordCreateDialogComponent implements OnInit {
   onCancelClick(): void {
     console.log("CLOSING METHOD CALLED");
     this.data.needUpdate = false;    
-    this.dialogRef.close();
+    this.dialogRef.close(this.data);
   }
 
 }

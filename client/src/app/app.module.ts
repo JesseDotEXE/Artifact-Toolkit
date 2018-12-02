@@ -17,7 +17,9 @@ import { MatToolbarModule,
          MatCardModule,
          MatDialogModule,
          MatFormFieldModule,
-         MatInputModule } from "@angular/material";
+         MatInputModule,
+         MatGridListModule, 
+         MatIconModule} from "@angular/material";
 import { GameRecordEditDialogComponent } from './components/game-record-edit-dialog/game-record-edit-dialog.component';
 import { GameRecordCreateDialogComponent } from './components/game-record-create-dialog/game-record-create-dialog.component';
 
@@ -53,7 +55,9 @@ const routes: Routes = [
     MatDialogModule,
     MatFormFieldModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    MatGridListModule,
+    MatIconModule
   ],
   providers: [
     GameRecordService,
