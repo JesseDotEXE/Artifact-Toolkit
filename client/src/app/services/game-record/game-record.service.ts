@@ -28,7 +28,8 @@ export class GameRecordService {
       outcome: newOutcome,
       notes: newNotes
     };
-
+    console.log("NEW MATCH TO CREATE");
+    console.log(newGameRecord);
     return this.http.post(`${this.uri}/tracker/create`, newGameRecord);
   }
 

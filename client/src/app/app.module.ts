@@ -36,7 +36,8 @@ const routes: Routes = [
     GameRecordCreateDialogComponent
   ],
   entryComponents: [
-    GameRecordEditDialogComponent
+    GameRecordEditDialogComponent,
+    GameRecordCreateDialogComponent
   ],
   imports: [
     BrowserModule,

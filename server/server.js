@@ -160,6 +160,7 @@ router.route('/tracker/delete/:id').get((req, res) => {
 });
 
 router.route('/tracker/create').post((req, res) => {
+    console.log(req.body);
     let newRecord = new GameRecord(req.body);
     newRecord.save()
         .then(gameRecord => {

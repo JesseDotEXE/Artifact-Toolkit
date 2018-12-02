@@ -4,6 +4,7 @@ import { GameRecordService } from '../../services/game-record/game-record.servic
 import { Router } from '../../../../node_modules/@angular/router';
 import { MatDialog } from '../../../../node_modules/@angular/material';
 import { GameRecordEditDialogComponent } from '../game-record-edit-dialog/game-record-edit-dialog.component';
+import { GameRecordCreateDialogComponent } from '../game-record-create-dialog/game-record-create-dialog.component';
 
 @Component({
   selector: 'app-game-record',
@@ -35,11 +36,17 @@ export class GameRecordComponent implements OnInit {
       });
   }
 
+  createRecord(newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes) {
+    this.gameRecordService.createGameRecord(newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes).subscribe(() => {
+      this.getGameRecords();
+    });
+  }
+
   deleteRecord(id) {
     console.log("GOING TO DELETE: " + id);
-    //this.gameRecordService.deleteGameRecord(id).subscribe(() => {
-    //  this.getGameRecords();
-    //});
+    this.gameRecordService.deleteGameRecord(id).subscribe(() => {
+     this.getGameRecords();
+    });
   }
 
   updateRecord(id, newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes) {
@@ -49,7 +56,33 @@ export class GameRecordComponent implements OnInit {
     });
   }
 
-  openDialog(oldData): void {
+  //Create Methods
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(GameRecordCreateDialogComponent, {
+      width: '500px',
+      data: {
+        needUpdate: false,
+        newDate: "",
+        newMatchType: "",
+        newDeck: "",
+        newOppDeck: "",
+        newOutcome: "",
+        newNotes: ""
+      }
+    } );
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('CREATE Dialog Closed');
+      console.log(result);
+      if(result.needUpdate) {
+        this.createRecord(result.newDate, result.newMatchType, result.newDeck, result.newOppDeck, result.newOutcome, result.newNotes);
+      }
+      //this.updateRecord(this.editId, result.newDate, result.newMatchType, result.newDeck, result.newOppDeck, result.newOutcome, result.newNotes);
+    });
+  }
+
+  //Edit Methods
+  openEditDialog(oldData): void {
     console.log("OpenDialog Data: ");
     console.log(oldData);    
     this.editId = oldData._id;
@@ -75,7 +108,9 @@ export class GameRecordComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('Dialog Closed');
       console.log(result);
-      this.updateRecord(this.editId, result.newDate, result.newMatchType, result.newDeck, result.newOppDeck, result.newOutcome, result.newNotes);
+      if(result.needUpdate) {
+        this.updateRecord(this.editId, result.newDate, result.newMatchType, result.newDeck, result.newOppDeck, result.newOutcome, result.newNotes);
+      }
     });
   }
 

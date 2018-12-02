@@ -7,10 +7,10 @@ let GameRecord = new Schema({
         type: String,
         default: new Date().getMonth + '/' + new Date().getDay
     },
-    deck: {
+    matchType: {
         type: String
     },
-    matchType: {
+    deck: {
         type: String
     },
     oppDeck: {

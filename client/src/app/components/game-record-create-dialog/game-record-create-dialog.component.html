@@ -1,3 +1,43 @@
-<p>
-  game-record-create-dialog works!
-</p>
+<h1 mat-dialog-title>Add Game Record</h1>
+<div mat-dialog-content>
+  <p>
+    Date:    
+    <mat-form-field>
+      <input matInput placeholder="MM/DD" [(ngModel)]="data.newDate">
+    </mat-form-field>
+  </p>
+  <p>
+    Match Type:    
+    <mat-form-field>
+      <input matInput placeholder="Constructed | Draft" [(ngModel)]="data.newMatchType">
+    </mat-form-field>
+  </p>
+  <p>
+    Deck:    
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.newDeck">
+    </mat-form-field>
+  </p>
+  <p>
+    Opp. Deck:    
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.newOppDeck">
+    </mat-form-field>
+  </p>    
+  <p>
+    Outcome:    
+    <mat-form-field>
+      <input matInput placeholder="Win | Lose | Draw" [(ngModel)]="data.newOutcome">
+    </mat-form-field>
+  </p>
+  <p>
+    Notes:    
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.newNotes">
+    </mat-form-field>
+  </p>  
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCreateClick()" cdkFocusInitial>Create</button>
+  <button mat-button (click)="onCancelClick()">Cancel</button>
+</div>
