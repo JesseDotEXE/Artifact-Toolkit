@@ -41,7 +41,9 @@ export class GameRecordService {
       outcome: newOutcome,
       notes: newNotes
     }
-
+    console.log("NEW MATCH TO UPDATE");
+    console.log(id);
+    console.log(updatedGameRecord);
     return this.http.post(`${this.uri}/tracker/update/${id}`, updatedGameRecord);
   }
 

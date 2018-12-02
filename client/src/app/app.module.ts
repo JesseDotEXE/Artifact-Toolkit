@@ -9,12 +9,17 @@ import { GameRecordComponent } from './components/game-record/game-record.compon
 import { GameRecordService } from './services/game-record/game-record.service';
 import { CardCollectionService } from './services/collection/card-collection.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { MatToolbarModule,
          MatButtonModule, 
          MatDividerModule,
          MatTableModule,
-         MatCardModule } from "@angular/material";
+         MatCardModule,
+         MatDialogModule,
+         MatFormFieldModule,
+         MatInputModule } from "@angular/material";
 import { GameRecordEditDialogComponent } from './components/game-record-edit-dialog/game-record-edit-dialog.component';
+import { GameRecordCreateDialogComponent } from './components/game-record-create-dialog/game-record-create-dialog.component';
 
 const routes: Routes = [
   { path: 'collection', component: CollectionComponent },
@@ -27,6 +32,10 @@ const routes: Routes = [
     AppComponent,
     CollectionComponent,
     GameRecordComponent,
+    GameRecordEditDialogComponent,
+    GameRecordCreateDialogComponent
+  ],
+  entryComponents: [
     GameRecordEditDialogComponent
   ],
   imports: [
@@ -39,7 +48,11 @@ const routes: Routes = [
     MatButtonModule,
     MatDividerModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule
   ],
   providers: [
     GameRecordService,

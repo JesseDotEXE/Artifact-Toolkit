@@ -42,9 +42,9 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell class="medium-cell" *matHeaderCellDef> Actions </th>
-        <td mat-cell class="medium-cell" *matCellDef>
-            <button mat-raised-button style="margin-right: 10px" color="primary"> Edit </button>            
-            <button mat-raised-button color="warn"> Delete </button>
+        <td mat-cell class="medium-cell" *matCellDef="let element">
+            <button mat-raised-button style="margin-right: 10px" color="primary" (click)="openDialog(element)"> Edit </button>            
+            <button mat-raised-button color="warn" (click)="deleteRecord(element._id)"> Delete </button>
         </td>
       </ng-container>
 

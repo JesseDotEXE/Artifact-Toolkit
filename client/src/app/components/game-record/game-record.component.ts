@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { GameRecord } from '../../services/game-record/game-record.model';
 import { GameRecordService } from '../../services/game-record/game-record.service';
 import { Router } from '../../../../node_modules/@angular/router';
+import { MatDialog } from '../../../../node_modules/@angular/material';
+import { GameRecordEditDialogComponent } from '../game-record-edit-dialog/game-record-edit-dialog.component';
 
 @Component({
   selector: 'app-game-record',
@@ -13,7 +15,11 @@ export class GameRecordComponent implements OnInit {
   gameRecords: GameRecord[];
   displayedColumns = ['date', 'matchType', 'deck', 'oppDeck', 'outcome', 'notes', 'actions'];
 
-  constructor(private gameRecordService: GameRecordService, private router: Router) { 
+  //Edit Variables
+  needUpdate: boolean;
+  editId: String;
+  
+  constructor(private gameRecordService: GameRecordService, private router: Router, public dialog: MatDialog) { 
   }
 
   ngOnInit() {
@@ -30,9 +36,50 @@ export class GameRecordComponent implements OnInit {
   }
 
   deleteRecord(id) {
-    this.gameRecordService.deleteGameRecord(id).subscribe(() => {
+    console.log("GOING TO DELETE: " + id);
+    //this.gameRecordService.deleteGameRecord(id).subscribe(() => {
+    //  this.getGameRecords();
+    //});
+  }
+
+  updateRecord(id, newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes) {
+    this.gameRecordService.updateGameRecord(id, newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes).subscribe(() => {
+      this.resetEditData();      
       this.getGameRecords();
     });
   }
 
+  openDialog(oldData): void {
+    console.log("OpenDialog Data: ");
+    console.log(oldData);    
+    this.editId = oldData._id;
+    console.log("EDIT ID: " + this.editId);
+
+    const dialogRef = this.dialog.open(GameRecordEditDialogComponent, {
+      width: '500px',
+      data: { needUpdate: false,
+              oldDate: oldData.date, 
+              oldMatchType: oldData.matchType, 
+              oldDeck: oldData.deck, 
+              oldOppDeck: oldData.oppDeck, 
+              oldOutcome: oldData.outcome, 
+              oldNotes: oldData.notes,
+              newDate: oldData.date,
+              newMatchType: oldData.matchType,
+              newDeck: oldData.deck,
+              newOppDeck: oldData.oppDeck,
+              newOutcome: oldData.outcome,
+              newNotes: oldData.notes }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog Closed');
+      console.log(result);
+      this.updateRecord(this.editId, result.newDate, result.newMatchType, result.newDeck, result.newOppDeck, result.newOutcome, result.newNotes);
+    });
+  }
+
+  resetEditData() {
+    this.editId = "";
+  }
 }
