@@ -7,7 +7,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { CollectionComponent } from './components/collection/collection.component';
 import { GameRecordComponent } from './components/game-record/game-record.component';
 import { GameRecordService } from './services/game-record/game-record.service';
-import { CardCollectionService } from './services/collection/card-collection.service';
+import { CollectionService } from './services/collection/collection.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule,
@@ -27,7 +27,7 @@ import { CardComponent } from './components/card/card.component';
 const routes: Routes = [
   { path: 'collection', component: CollectionComponent },
   { path: 'tracker', component: GameRecordComponent},
-  { path: '', redirectTo: '/tracker', pathMatch: 'full'}
+  { path: '', redirectTo: '/collection', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -63,7 +63,7 @@ const routes: Routes = [
   ],
   providers: [
     GameRecordService,
-    CardCollectionService
+    CollectionService
   ],
   bootstrap: [AppComponent]
 })

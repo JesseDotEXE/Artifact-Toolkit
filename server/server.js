@@ -13,12 +13,12 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const databaseURL = 'mongodb://jesse:password1@ds059702.mlab.com:59702/artifact-toolkit';
-mongoose.connect('mongodb://jesse:password1@ds059702.mlab.com:59702/artifact-toolkit');
-const connection = mongoose.connection;
-
-connection.once('open', () => {
-    console.log('MongoDB database connection established successfully!');
-});
+//mongoose.connect('mongodb://jesse:password1@ds059702.mlab.com:59702/artifact-toolkit');
+//const connection = mongoose.connection;
+//
+//connection.once('open', () => {
+//    console.log('MongoDB database connection established successfully!');
+//});
 
 app.use('/', router);
 
@@ -29,9 +29,10 @@ router.route('/cards').get((req, res) => {
 
 function getCardData() {
     let rawData = fs.readFileSync('data/cards.json');  
-    let cards = JSON.parse(rawData);  
-    console.log(cards);
-    return cards;  
+    let card_set = JSON.parse(rawData);
+    //let cards = card_set.card_list;
+    console.log(card_set);
+    return cards_set;  
 }
 //Card List Route End
 

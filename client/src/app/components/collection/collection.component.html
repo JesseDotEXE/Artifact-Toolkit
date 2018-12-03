@@ -1,3 +1,22 @@
-<p>
-  collection works!
-</p>
+<div>
+  <mat-card>
+    <mat-card-header>
+        <mat-card-title>
+          Game Tracker - Heroes | Creeps | Spells | Improvements | Red | Blue | Green | Black <!--Placeholder Buttons-->
+        </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <div class="card-deck-container">
+          <app-card *ngFor="let i of items"  class="card-item"></app-card>  
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <div style="text-align: center;">    
+          <button mat-raised-button color="primary" (click)="getCardList()">
+              Get Cards
+          </button>
+        </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

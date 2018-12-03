@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GameRecord } from '../../services/game-record/game-record.model';
 import { GameRecordService } from '../../services/game-record/game-record.service';
-import { Router } from '../../../../node_modules/@angular/router';
-import { MatDialog } from '../../../../node_modules/@angular/material';
+import { Router } from '@angular/router'
+import { MatDialog } from '@angular/material'
 import { GameRecordEditDialogComponent } from '../game-record-edit-dialog/game-record-edit-dialog.component';
 import { GameRecordCreateDialogComponent } from '../game-record-create-dialog/game-record-create-dialog.component';
 

@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 
-export class CardCollectionService {
+export class CollectionService {
   uri = 'http://localhost:4000';
   fakeUserId = '5bff3727fb6fc038cbae8a41'; //Using this to fake a user being "logged in".
 
