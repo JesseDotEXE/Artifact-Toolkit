@@ -7,15 +7,25 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-      <div class="card-deck-container">
-          <app-card *ngFor="let i of items"  class="card-item"></app-card>  
+      <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="flex-start" class="card-deck-container">
+          <mat-card fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" *ngFor="let i of cards" class="card-item">
+            <mat-card-header>
+              <mat-card-title>{{i.card_name}}</mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <img mat-card-image [src]="i.image">
+            <!--<mat-card-content>Placeholder</mat-card-content>-->
+            <mat-card-actions>
+                <button mat-button (click)="addCardToCollection(i.card_id)">Add</button>
+                <button mat-button (click)="removeCardFromCollection(i.card_id)">Remove</button>
+            </mat-card-actions>
+          </mat-card>
       </div>
     </mat-card-content>
     <mat-card-actions>
         <div style="text-align: center;">    
-          <button mat-raised-button color="primary" (click)="getCardList()">
-              Get Cards
-          </button>
+          <button mat-raised-button color="primary" (click)="getCardList()">Get Cards</button>
+          <button mat-raised-button color="accent" (click)="getCollection()">Get Collection</button>
         </div>
     </mat-card-actions>
   </mat-card>

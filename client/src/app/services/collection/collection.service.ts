@@ -21,10 +21,10 @@ export class CollectionService {
   }
 
   addCardToCollection(cardId) {
-    return this.http.get(`${this.uri}/collection/add/${this.fakeUserId}/${cardId}`);
+    return this.http.get(`${this.uri}/collection/${this.fakeUserId}/add/${cardId}`);
   }
 
-  removeCardToCollection(cardId) {
-    return this.http.get(`${this.uri}/collection/remove/${this.fakeUserId}/${cardId}`);
+  removeCardFromCollection(cardId) {
+    return this.http.get(`${this.uri}/collection/${this.fakeUserId}/remove/${cardId}`);
   }
 }

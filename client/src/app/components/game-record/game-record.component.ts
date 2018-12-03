@@ -31,8 +31,8 @@ export class GameRecordComponent implements OnInit {
     this.gameRecordService.getGameRecords()
       .subscribe((records: GameRecord[]) => {
         this.gameRecords = records;
-        console.log('Game Records: ');
-        console.log(this.gameRecords);
+        //console.log('Game Records: ');
+        //console.log(this.gameRecords);
       });
   }
 

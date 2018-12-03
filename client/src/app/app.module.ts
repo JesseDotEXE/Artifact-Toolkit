@@ -23,11 +23,12 @@ import { MatToolbarModule,
 import { GameRecordEditDialogComponent } from './components/game-record-edit-dialog/game-record-edit-dialog.component';
 import { GameRecordCreateDialogComponent } from './components/game-record-create-dialog/game-record-create-dialog.component';
 import { CardComponent } from './components/card/card.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routes: Routes = [
   { path: 'collection', component: CollectionComponent },
   { path: 'tracker', component: GameRecordComponent},
-  { path: '', redirectTo: '/collection', pathMatch: 'full'}
+  { path: '', redirectTo: '/tracker', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -59,7 +60,8 @@ const routes: Routes = [
     FormsModule,
     MatInputModule,
     MatGridListModule,
-    MatIconModule
+    MatIconModule,
+    FlexLayoutModule
   ],
   providers: [
     GameRecordService,
