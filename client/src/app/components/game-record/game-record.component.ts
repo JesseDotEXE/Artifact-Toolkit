@@ -77,7 +77,6 @@ export class GameRecordComponent implements OnInit {
       if(result.needUpdate) {
         this.createRecord(result.newDate, result.newMatchType, result.newDeck, result.newOppDeck, result.newOutcome, result.newNotes);
       }
-      //this.updateRecord(this.editId, result.newDate, result.newMatchType, result.newDeck, result.newOppDeck, result.newOutcome, result.newNotes);
     });
   }
 

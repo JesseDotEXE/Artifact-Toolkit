@@ -1,20 +1,31 @@
 <div>
   <mat-card>
     <mat-card-header>
-        <mat-card-title>
-          Game Tracker - Heroes | Creeps | Spells | Improvements | Red | Blue | Green | Black <!--Placeholder Buttons-->
-        </mat-card-title>
+      <mat-card-title>
+        Card Collection
+        <button mat-button color="primary" (click)="filterByCollection()">Collection</button>
+        <button mat-button color="primary" (click)="filterByHero()">Hero</button> 
+        <button mat-button color="primary" (click)="filterByCreep()">Creep</button>
+        <button mat-button color="primary" (click)="filterBySpell()">Spell</button>
+        <button mat-button color="primary" (click)="filterByImprovement()">Improvement</button>
+        <button mat-button color="primary" (click)="filterByRed()">Red</button> 
+        <button mat-button color="primary" (click)="filterByBlue()">Blue</button>
+        <button mat-button color="primary" (click)="filterByGreen()">Green</button>
+        <button mat-button color="primary" (click)="filterByBlack()">Black</button>
+        <button mat-button color="primary" (click)="clearFilter()"><mat-icon>clear</mat-icon></button>
+      </mat-card-title>    
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
+      <!--Credit to the answer here: https://stackoverflow.com/questions/44995971/creating-grid-of-cards-dynamically-using-angular-material-2-->
+      <!--This still needs a lot of display work though.-->
       <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="flex-start" class="card-deck-container">
-          <mat-card fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" *ngFor="let i of cards" class="card-item">
+          <mat-card fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" *ngFor="let i of filteredCards" class="card-item">
             <mat-card-header>
               <mat-card-title>{{i.card_name}}</mat-card-title>
             </mat-card-header>
             <mat-divider></mat-divider>
             <img mat-card-image [src]="i.image">
-            <!--<mat-card-content>Placeholder</mat-card-content>-->
             <mat-card-actions>
                 <button mat-button (click)="addCardToCollection(i.card_id)">Add</button>
                 <button mat-button (click)="removeCardFromCollection(i.card_id)">Remove</button>

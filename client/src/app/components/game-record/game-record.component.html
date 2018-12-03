@@ -1,7 +1,12 @@
 <div>
   <mat-card>
     <mat-card-header>
-        <mat-card-title>Game Tracker</mat-card-title>
+        <mat-card-title>
+          Game Tracker
+          <button mat-button color="primary" (click)="openCreateDialog()">
+              <mat-icon>add_box</mat-icon>
+          </button>
+        </mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
@@ -40,10 +45,10 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell class="medium-cell" *matHeaderCellDef> Actions </th>
           <td mat-cell class="medium-cell" *matCellDef="let element">
-              <button mat-raised-button style="margin-right: 10px" color="primary" (click)="openEditDialog(element)">
+              <button mat-button style="margin-right: 10px" color="primary" (click)="openEditDialog(element)">
                 <mat-icon>edit</mat-icon>
               </button>            
-              <button mat-raised-button color="warn" (click)="deleteRecord(element._id)">
+              <button mat-button color="warn" (click)="deleteRecord(element._id)">
                 <mat-icon>delete</mat-icon>
               </button>
           </td>
@@ -55,12 +60,5 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </mat-card-content>
-    <mat-card-actions>
-      <div style="text-align: center;">    
-        <button mat-raised-button color="primary" (click)="openCreateDialog()">
-            <mat-icon>add_box</mat-icon>
-        </button>
-      </div>
-    </mat-card-actions>
   </mat-card>
 </div>
