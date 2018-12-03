@@ -36,7 +36,7 @@ export class CollectionComponent implements OnInit {
   getCardList() {
     this.collectionService.getCardData()
     .subscribe((cardData: Card[]) => {
-      this.allCards = cardData.slice(0, 15); //Slicing for testing pagination.
+      this.allCards = cardData.slice(0, 48); //Slicing until I can get pagination working.
       this.clearFilter();
     });
   };

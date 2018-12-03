@@ -36,12 +36,11 @@ function getCardData() {
     //Dynamically modify the card data to just include relevant info for the client.
     let cleanCards = [];
     for(let card of cards) {
-        //Only want to add the card if it has a large_image.
-        //Built in abilities and passives don't have these.
         let type = "";
         type = card.card_type;
 
         if(type === "Ability" || type === "Passive Ability") {
+            //Skip if the card is a built in Ability.
         }
         else {
             let color = "";
@@ -54,7 +53,7 @@ function getCardData() {
             else if(card.is_green) {
                 color = "green";
             }
-            else if(color.is_black) {
+            else if(card.is_black) {
                 color = "black";
             }
 
