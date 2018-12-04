@@ -1,5 +1,5 @@
 export interface Card {
-    id: String;
+    _id: String;
     card_id: String;
     card_name: String;
     card_type: String;
