@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import GameRecord from './models/GameRecord';
-import CardCollection from './models/CardCollection';
+import Card from './models/Card';
 import fs from 'fs';
 
 const app = express();
@@ -12,7 +12,6 @@ const router = express.Router();
 app.use(cors());
 app.use(bodyParser.json());
 
-const databaseURL = 'mongodb://jesse:password1@ds059702.mlab.com:59702/artifact-toolkit';
 mongoose.connect('mongodb://jesse:password1@ds059702.mlab.com:59702/artifact-toolkit');
 const connection = mongoose.connection;
 
@@ -22,110 +21,125 @@ connection.once('open', () => {
 
 app.use('/', router);
 
-//Card List Routes Start
+//Collection Routes Start
+router.route('/collection').get((req, res) => {
+    Card.find((err, cards) => {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            console.log("Inside /collection route.");
+            console.log(cards);
+            res.json(cards);
+        }
+    })
+});
+
+router.route('/collection/update/:id').post((req, res) => {
+    console.log(req.body);
+    Card.findById(req.params.id, (err, card) => {
+       if(!card) {
+           return next(new Error('Could not find record.'));
+       }
+       else {
+           card.owned = req.body.owned;
+
+           card.save()
+               .then(card => {
+                   console.log(card);
+                   res.json(card);
+               })
+               .catch(err => {
+                   res.status(400).send('Update failed.');
+               })
+       }
+    });
+});
+
+//Should never use this method client side.
+router.route('/collection/add/:id').post((req, res) => {
+    console.log(req.body);
+    let newCard = new Card(req.body);
+    newCard.color = "blue";
+    newCard.save()
+        .then(card => {
+            res.json('Update done.');
+        })
+        .catch(err => {
+            res.status(400).send('Update failed.');
+        });
+});
+
+//Should never use this method client side.
+router.route('/collection/remove/:id').get((req, res) => {
+    Card.findByIdAndRemove({_id: req.params.id}, (err, cards) => {
+        if(err) {
+            res.json(err);
+        }
+        else {
+            res.json('Delete successful.');
+        }
+    });
+});
+
+//Should never use client side.
 router.route('/cards').get((req, res) => {
     let cards = getCardData();
     res.json(cards);
 })
 
+//Should never use client side.
 function getCardData() {
-    let rawData = fs.readFileSync('data/cards.json');  
-    let cardData = JSON.parse(rawData);
-    let cards = cardData.card_set.card_list;
+    let rawData = fs.readFileSync('data/cards.json');
+    let valveCardData = JSON.parse(rawData);
+    let valveCards = valveCardData.card_set.card_list;
 
     //Dynamically modify the card data to just include relevant info for the client.
     let cleanCards = [];
-    for(let card of cards) {
+    for(let vc of valveCards) {
         let type = "";
-        type = card.card_type;
+        type = vc.card_type;
 
         if(type === "Ability" || type === "Passive Ability") {
             //Skip if the card is a built in Ability.
         }
         else {
+            let newCard = new Card();
+
             let color = "";
-            if(card.is_red) {
+            if(vc.is_red) {
                 color = "red";
             }
-            else if(card.is_blue) {
+            else if(vc.is_blue) {
                 color = "blue";
-            } 
-            else if(card.is_green) {
+            }
+            else if(vc.is_green) {
                 color = "green";
             }
-            else if(card.is_black) {
+            else if(vc.is_black) {
                 color = "black";
             }
 
-            cleanCards.push({ 
-                card_id: card.card_id, 
-                card_name: card.card_name.english, 
-                card_type: card.card_type,
-                image: card.large_image.default,
-                card_color: color
-            });
-        }   
+            newCard.card_id = vc.card_id.toString();
+            newCard.card_name = vc.card_name.english.toString();
+            newCard.card_type = vc.card_type.toString();
+            newCard.image = vc.large_image.default.toString();
+            newCard.card_color = color.toString();
+            newCard.owned = "false";
+
+            newCard.save()
+                .then(card => {
+                    console.log('Update!')
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+            cleanCards.push(newCard);
+        }
     }
-    
-    //console.log(cleanCards);
-    return cleanCards;  
+    return cleanCards;
 }
-//Card List Route End
-
-//Collection Routes Start
-router.route('/collection').get((req, res) => {
-
-});
-
-router.route('/collection/:id').get((req, res) => {
-    CardCollection.findById(req.params.id, (err, collection) => {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            console.log("Inside /collection/:id route.");
-            let cards = collection.cards;
-            res.json(cards);
-        }
-    });
-});
-
-router.route('/collection/:id/add/:card').get((req, res) => {
-    CardCollection.findById(req.params.id, (err, collection) => {
-        if(!collection) {
-            return next(new Error('Could not find record.'));
-        }
-        else {
-            collection.cards.push(req.params.card); //Assume validated client side.
-            collection.save()
-                .then(collection => {
-                    res.json('Update done.');
-                })
-                .catch(err => {
-                    res.status(400).send('Update failed.');
-                });
-        }
-    });
-});
-
-router.route('/collection/:id/remove/:card').get((req, res) => {
-    CardCollection.findById(req.params.id, (err, collection) => {
-        if(!collection) {
-            return next(new Error('Could not find record.'));
-        }
-        else {            
-            const cardIndex = collection.cards.indexOf(req.params.card);
-            collection.cards.splice(cardIndex, 1); //Assume validated client side.
-            collection.save()
-                .then(collection => {
-                    res.json('Update done.');
-                })
-                .catch(err => {
-                    res.status(400).send('Update failed.');
-                });
-        }
-    });
-});
 //Collection Routes End
 
 //Game Tracker Routes Start

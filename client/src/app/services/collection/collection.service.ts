@@ -7,24 +7,22 @@ import { HttpClient } from '@angular/common/http';
 
 export class CollectionService {
   uri = 'http://localhost:4000';
-  fakeUserId = '5bff3727fb6fc038cbae8a41'; //Using this to fake a user being "logged in".
 
-  constructor(private http: HttpClient) {     
+  constructor(private http: HttpClient) {
   }
 
-  getCardData() {
-    return this.http.get(`${this.uri}/cards`);
-  }
+  // getCardData() {
+  //   return this.http.get(`${this.uri}/cards`);
+  // }
 
   getCollection() {
-    return this.http.get(`${this.uri}/collection/${this.fakeUserId}`);
+    return this.http.get(`${this.uri}/collection`);
   }
 
-  addCardToCollection(cardId) {
-    return this.http.get(`${this.uri}/collection/${this.fakeUserId}/add/${cardId}`);
-  }
-
-  removeCardFromCollection(cardId) {
-    return this.http.get(`${this.uri}/collection/${this.fakeUserId}/remove/${cardId}`);
+  updateCardOwnership(id, newOwnership) {
+    const updatedCardValues = {
+      owned: newOwnership
+    };
+    return this.http.post(`${this.uri}/collection/update/${id}`, updatedCardValues);
   }
 }

@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class GameRecordService {
   uri = 'http://localhost:4000';
 
-  constructor(private http: HttpClient) {     
+  constructor(private http: HttpClient) {
   }
 
   getGameRecords() {
@@ -41,7 +41,7 @@ export class GameRecordService {
       matchType: newMatchType,
       outcome: newOutcome,
       notes: newNotes
-    }
+    };
     console.log("NEW MATCH TO UPDATE");
     console.log(id);
     console.log(updatedGameRecord);

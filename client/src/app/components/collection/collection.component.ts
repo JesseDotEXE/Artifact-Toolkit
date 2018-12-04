@@ -29,55 +29,49 @@ export class CollectionComponent implements OnInit {
   constructor(private collectionService: CollectionService, private router: Router) { }
 
   ngOnInit() {
-    this.getCardList();
+    //this.getCardList();
     this.getCollection();
   }
 
-  getCardList() {
-    this.collectionService.getCardData()
+  getCollection() {
+    this.collectionService.getCollection()
     .subscribe((cardData: Card[]) => {
+      console.log(cardData);
       this.allCards = cardData; // cardData.slice(0, 48); //Slicing until I can get pagination working.
       this.clearFilter();
     });
-  };
-
-  getCollection() {
-    this.collectionService.getCollection()
-    .subscribe((collectionData: string[]) => {
-      this.collection = collectionData;
-      // console.log("Collection: ");
-      // console.log(this.collection);
-    });
   }
 
-  addCardToCollection(id) {
-    // We only want top add if you find it in the collection.
-    const cardId: string = id.toString();
-    console.log('ID: ' + id);
-    const cardIndex = this.collection.indexOf(cardId);
-    console.log('Card Index: ' +  cardIndex);
-    if(cardIndex === -1) {
-      this.collectionService.addCardToCollection(cardId)
-      .subscribe(() => {
-        console.log('Added to collection: ' + cardId);
-        this.getCollection();
-      });
-    }
-  }
+  updateCardOwnership(id, curOwn) {
+    let newOwn: String = 'false';
 
-  removeCardFromCollection(id) {
-    // We only want to remove if you find it in the collection.
-    var cardId: string = id.toString();    
-    console.log("ID: " + id);
-    const cardIndex = this.collection.indexOf(cardId);
-    console.log("Card Index: " +  cardIndex);
-    if(cardIndex !== -1) {
-      this.collectionService.removeCardFromCollection(cardId)
-      .subscribe(() => {
-        console.log('Removed from collection: ' + cardId);
-        this.getCollection();
-      });
+    if (curOwn === 'true') {
+      newOwn = 'false';
+    } else {
+      newOwn = 'true';
     }
+
+    this.collectionService.updateCardOwnership(id, newOwn)
+      .subscribe((cardData: Card) => {
+        //console.log(cardData);
+
+        // This is to avoid having to refresh the whole page.
+        let updatedCard: Card;
+        this.allCards.forEach((card) => {
+          if (card._id === id) {
+            updatedCard = card;
+          }
+        });
+
+        const updateIndexAll = this.allCards.indexOf(updatedCard);
+        console.log('Updated Index found: ' + updateIndexAll);
+        this.allCards[updateIndexAll] = cardData;
+
+        const updateIndexFilter = this.filteredCards.indexOf(updatedCard);
+        console.log('Updated Index found: ' + updateIndexFilter);
+        this.filteredCards[updateIndexFilter] = cardData;
+        console.log(this.filteredCards);
+      });
   }
 
   // Begin Filter Methods
@@ -110,22 +104,16 @@ export class CollectionComponent implements OnInit {
   }
 
   filterByCollection() {
-    console.log("Filter by: Collection");
+    // console.log('Filter by Collection');
     let tempCards: Card[] = [];
 
-    //We want to add only the cards which have their ID in the collection.
     this.allCards.forEach((card) => {
-        var cardId: string = card.card_id.toString();    
-        const cardIndex = this.collection.indexOf(cardId);
-        console.log("Card Index: " +  cardIndex);
-        if(cardIndex !== -1) { //Card Found
+        if (card.owned === 'true') {
           tempCards.push(card);
         }
     });
 
     this.filteredCards = tempCards;
-    //There is a minor issue here is that if I remove from the collection screen it doesn't auto refresh.
-    //Work around is fix with a popup.
   }
 
   filterByRed() {
