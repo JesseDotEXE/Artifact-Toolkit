@@ -20,7 +20,7 @@
       <!--Credit to the answer here: https://stackoverflow.com/questions/44995971/creating-grid-of-cards-dynamically-using-angular-material-2-->
       <!--This still needs a lot of display work though.-->
       <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="16px" fxLayoutAlign="flex-start">
-          <mat-card fxFlex="0 1 calc(33.3% - 384px)" fxFlex.lt-lg="0 1 calc(50% - 256px)" fxFlex.lt-md="0 1 calc(50% - 128px)" fxFlex.lt-sm="100%" *ngFor="let i of filteredCards">
+          <mat-card fxFlex="20%" fxFlex.lt-lg="25%" fxFlex.lt-md="33%" fxFlex.lt-sm="100%" *ngFor="let i of filteredCards">
             <mat-card-content>
             <img mat-card-image [src]="i.image">
           </mat-card-content>

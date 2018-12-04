@@ -44,7 +44,7 @@ export class CollectionComponent implements OnInit {
   getCollection() {
     this.collectionService.getCollection()
     .subscribe((collectionData: string[]) => {
-      this.collection = collectionData;
+      this.collection = collectionData.slice(0, 24);
       //console.log("Collection: ");
       //console.log(this.collection);
     });
