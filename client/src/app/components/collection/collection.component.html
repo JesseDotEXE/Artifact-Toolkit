@@ -15,21 +15,23 @@
         <button mat-button color="primary" (click)="clearFilter()"><mat-icon>clear</mat-icon></button>
       </mat-card-title>    
     </mat-card-header>
-    <mat-divider></mat-divider>
     <mat-card-content>
       <!--Credit to the answer here: https://stackoverflow.com/questions/44995971/creating-grid-of-cards-dynamically-using-angular-material-2-->
       <!--This still needs a lot of display work though.-->
       <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="16px" fxLayoutAlign="flex-start">
-          <mat-card fxFlex="20%" fxFlex.lt-lg="25%" fxFlex.lt-md="33%" fxFlex.lt-sm="100%" *ngFor="let i of filteredCards">
-            <mat-card-content>
+        <div fxFlex="18%" fxFlex.xl="18%" fxFlex.lg="20%" fxFlex.md="30%" fxFlex.sm="45%" fxFlex.xs="100%" *ngFor="let i of filteredCards">
+          <mat-card style="margin-bottom:16px">
+            <mat-card-content style="margin-bottom:0px">
             <img mat-card-image [src]="i.image">
           </mat-card-content>
-            <mat-card-actions>
-                <button mat-button color="primary" (click)="addCardToCollection(i.card_id)">Add</button>
-                <button mat-button color="warn" (click)="removeCardFromCollection(i.card_id)">Remove</button>
+            <mat-card-actions style="padding-top: 0px">
+                <ng-container *ngIf="cardIsInCollection(i.card_id); then removeButton; else addButton"></ng-container>
+                <ng-template #addButton><button mat-button color="primary" (click)="addCardToCollection(i.card_id)">Add to Collection</button></ng-template>
+              <ng-template #removeButton><button mat-button color="warn" (click)="removeCardFromCollection(i.card_id)">Remove from Collection</button></ng-template>
             </mat-card-actions>
           </mat-card>
-      </div>
+        </div>
+      </div >
     </mat-card-content>
   </mat-card>
 </div>

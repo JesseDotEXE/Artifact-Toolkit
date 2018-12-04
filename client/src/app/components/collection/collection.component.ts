@@ -36,7 +36,7 @@ export class CollectionComponent implements OnInit {
   getCardList() {
     this.collectionService.getCardData()
     .subscribe((cardData: Card[]) => {
-      this.allCards = cardData;// cardData.slice(0, 48); //Slicing until I can get pagination working.
+      this.allCards = cardData; // cardData.slice(0, 48); //Slicing until I can get pagination working.
       this.clearFilter();
     });
   };
@@ -44,29 +44,29 @@ export class CollectionComponent implements OnInit {
   getCollection() {
     this.collectionService.getCollection()
     .subscribe((collectionData: string[]) => {
-      this.collection = collectionData.slice(0, 24);
-      //console.log("Collection: ");
-      //console.log(this.collection);
+      this.collection = collectionData;
+      // console.log("Collection: ");
+      // console.log(this.collection);
     });
   }
 
   addCardToCollection(id) {
-    //We only want top add if you find it in the collection.
-    var cardId: string = id.toString();
-    console.log("ID: " + id);
+    // We only want top add if you find it in the collection.
+    const cardId: string = id.toString();
+    console.log('ID: ' + id);
     const cardIndex = this.collection.indexOf(cardId);
-    console.log("Card Index: " +  cardIndex);
+    console.log('Card Index: ' +  cardIndex);
     if(cardIndex === -1) {
       this.collectionService.addCardToCollection(cardId)
       .subscribe(() => {
-        console.log("Added to collection: " + cardId);
+        console.log('Added to collection: ' + cardId);
         this.getCollection();
       });
     }
   }
 
   removeCardFromCollection(id) {
-    //We only want to remove if you find it in the collection.
+    // We only want to remove if you find it in the collection.
     var cardId: string = id.toString();    
     console.log("ID: " + id);
     const cardIndex = this.collection.indexOf(cardId);
@@ -74,34 +74,34 @@ export class CollectionComponent implements OnInit {
     if(cardIndex !== -1) {
       this.collectionService.removeCardFromCollection(cardId)
       .subscribe(() => {
-        console.log("Removed from collection: " + cardId);
+        console.log('Removed from collection: ' + cardId);
         this.getCollection();
       });
     }
   }
 
-  //Begin Filter Methods
+  // Begin Filter Methods
   filterCardsByType(filter: string) {
-    //console.log("Filter by: " + filter);
+    // console.log("Filter by: " + filter);
     let tempCards: Card[];
-    tempCards = this.allCards; //We don't actually want to mess with the all cards item.
+    tempCards = this.allCards; // We don't actually want to mess with the all cards item.
 
     this.filteredCards = tempCards.filter((card: Card) => {
       return (card.card_type === filter);
     });
-    console.log("Temp after filter: ");
-    console.log(this.filteredCards);   
+    console.log('Temp after filter: ');
+    console.log(this.filteredCards);
   }
 
   filterCardsByColor(filter: string) {
     let tempCards: Card[];
-    tempCards = this.allCards; //We don't actually want to mess with the all cards item.
+    tempCards = this.allCards; // We don't actually want to mess with the all cards item.
 
     this.filteredCards = tempCards.filter((card: Card) => {
       return (card.card_color === filter);
     });
     console.log("Temp after filter: ");
-    console.log(this.filteredCards); 
+    console.log(this.filteredCards);
   }
 
   clearFilter() {
@@ -160,4 +160,15 @@ export class CollectionComponent implements OnInit {
     this.filterCardsByType(this.FILTER_IMPROVEMENT);
   }
   //End Filter Methods
+
+  cardIsInCollection(cardId) {
+    const tempId = cardId.toString();
+    const cardIndex = this.collection.indexOf(tempId);
+    if (cardIndex !== -1) { //Card Found
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }
