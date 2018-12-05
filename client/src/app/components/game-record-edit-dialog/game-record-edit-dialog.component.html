@@ -1,41 +1,44 @@
 <h1 mat-dialog-title>Edit Game</h1>
 <div mat-dialog-content>
-  <p>
-    Date:    
-    <mat-form-field>
-      <input matInput placeholder={{data.oldDate}} [(ngModel)]="data.newDate">
-    </mat-form-field>
-  </p>
-  <p>
-    Match Type:    
-    <mat-form-field>
-      <input matInput placeholder={{data.oldMatchType}} [(ngModel)]="data.newMatchType">
-    </mat-form-field>
-  </p>
-  <p>
-    Deck:    
-    <mat-form-field>
-      <input matInput placeholder={{data.oldDeck}} [(ngModel)]="data.newDeck">
-    </mat-form-field>
-  </p>
-  <p>
-    Opp. Deck:    
-    <mat-form-field>
-      <input matInput placeholder={{data.oldOppDeck}} [(ngModel)]="data.newOppDeck">
-    </mat-form-field>
-  </p>    
-  <p>
-    Outcome:    
-    <mat-form-field>
-      <input matInput placeholder={{data.oldOutcome}} [(ngModel)]="data.newOutcome">
-    </mat-form-field>
-  </p>
-  <p>
-    Notes:    
-    <mat-form-field>
-      <input matInput placeholder={{data.oldNotes}} [(ngModel)]="data.newNotes">
-    </mat-form-field>
-  </p>  
+  <div>
+    <p>   
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Date" [(ngModel)]="data.newDate">
+      </mat-form-field>
+    </p>
+    <p>   
+      <mat-form-field class="full-width">
+        <mat-select matInput placeholder="Game Format" [(value)]="data.newMatchType">
+          <mat-option value="Constructed">Constructed</mat-option>
+          <mat-option value="Draft">Draft</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <p>   
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Deck Played" [(ngModel)]="data.newDeck">
+      </mat-form-field>
+    </p>
+    <p>   
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Opponent's Deck" [(ngModel)]="data.newOppDeck">
+      </mat-form-field>
+    </p>    
+    <p> 
+      <mat-form-field class="full-width">
+        <mat-select placeholder="Outcome" [(value)]="data.newOutcome">    
+          <mat-option value="Win">Win</mat-option>
+          <mat-option value="Lose">Lose</mat-option>
+          <mat-option value="Draw">Draw</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+    <p>  
+      <mat-form-field class="full-width">
+        <textarea matInput placeholder="Game Notes" [(ngModel)]="data.newNotes"></textarea>
+      </mat-form-field>
+    </p>  
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onUpdateClick()" cdkFocusInitial color="primary">Update</button>

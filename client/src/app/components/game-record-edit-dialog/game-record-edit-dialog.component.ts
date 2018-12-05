@@ -3,12 +3,6 @@ import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material'
 
 export interface DialogData {
   needUpdate: boolean;
-  oldDate: String;
-  oldMatchType: String;
-  oldDeck: String;
-  oldOppDeck: String;
-  oldOutcome: String;
-  oldNotes: String;
   newDate: String;
   newMatchType: String;
   newDeck: String;
