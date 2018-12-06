@@ -13,7 +13,17 @@ export class CollectionComponent implements OnInit {
   collection: string[];
   allCards: Card[];
   filteredCards: Card[];
-  filter: string;
+
+  addOwned: boolean = false;
+  addRed: boolean = false;
+  addBlue: boolean = false;
+  addGreen: boolean = false;
+  addBlack: boolean = false;
+  addHero: boolean = false;
+  addCreep: boolean = false;
+  addSpell: boolean = false;
+  addImprovement: boolean = false;
+  addItem: boolean = false;
 
   FILTER_NONE: string = "none";
   FILTER_RED: string = "red";
@@ -24,19 +34,19 @@ export class CollectionComponent implements OnInit {
   FILTER_CREEP: string = "Creep";
   FILTER_SPELL: string = "Spell";
   FILTER_IMPROVEMENT: string = "Improvement";  
+  FILTER_ITEM: string = "Item";
 
   constructor(private collectionService: CollectionService, private router: Router) { 
   }
 
   ngOnInit() {
     //this.getCardList();
-    this.getCollection();
+    this.getCollection();    
   }
 
   getCollection() {
     this.collectionService.getCollection()
     .subscribe((cardData: Card[]) => {
-      console.log(cardData);
       this.allCards = cardData; // cardData.slice(0, 48); //Slicing until I can get pagination working.
       this.clearFilter();
     });
@@ -64,88 +74,138 @@ export class CollectionComponent implements OnInit {
         });
 
         const updateIndexAll = this.allCards.indexOf(updatedCard);
-        console.log('Updated Index found: ' + updateIndexAll);
         this.allCards[updateIndexAll] = cardData;
 
         const updateIndexFilter = this.filteredCards.indexOf(updatedCard);
-        console.log('Updated Index found: ' + updateIndexFilter);
         this.filteredCards[updateIndexFilter] = cardData;
-        console.log(this.filteredCards);
       });
   }
 
-  // Begin Filter Methods
-  filterCardsByType(filter: string) {
-    // console.log("Filter by: " + filter);
-    let tempCards: Card[];
-    tempCards = this.allCards; // We don't actually want to mess with the all cards item.
+  applyFilters() {
+    //Start with all the cards.
+    let finalCards: Card[] = this.allCards;
 
-    this.filteredCards = tempCards.filter((card: Card) => {
-      return (card.card_type === filter);
-    });
-    console.log('Temp after filter: ');
-    console.log(this.filteredCards);
+    //Then lets decide if we will only do owned/all.
+    if(this.addOwned) {
+      finalCards = this.filterByCollection(finalCards);
+    }
+
+    //Next of that set lets add in cards by color using our already filtered above.
+    let coloredCards: Card[] = [];
+    if(this.addRed) {
+      coloredCards = coloredCards.concat(this.filterCardsByColor(finalCards, this.FILTER_RED));
+    }
+    if(this.addBlue) {
+      coloredCards = coloredCards.concat(this.filterCardsByColor(finalCards, this.FILTER_BLUE));
+    }
+    if(this.addGreen) {
+      coloredCards = coloredCards.concat(this.filterCardsByColor(finalCards, this.FILTER_GREEN));
+    }
+    if(this.addBlack) {
+      coloredCards = coloredCards.concat(this.filterCardsByColor(finalCards, this.FILTER_BLACK));
+    }
+    if(coloredCards.length > 0) {
+      finalCards = coloredCards;
+    }
+
+    //Finally of that set lets add in cards by type using our already filtered above.
+    let typedCards: Card[] = [];
+    if(this.addHero) {
+      typedCards = typedCards.concat(this.filterCardsByType(finalCards, this.FILTER_HERO));
+    }
+    if(this.addCreep) {
+      typedCards = typedCards.concat(this.filterCardsByType(finalCards, this.FILTER_CREEP));
+    }
+    if(this.addSpell) {
+      typedCards = typedCards.concat(this.filterCardsByType(finalCards, this.FILTER_SPELL));
+    }
+    if(this.addImprovement) {
+      typedCards = typedCards.concat(this.filterCardsByType(finalCards, this.FILTER_IMPROVEMENT));
+    }
+    if(this.addItem) {
+      typedCards = typedCards.concat(this.filterCardsByType(finalCards, this.FILTER_ITEM));
+    }
+    if(typedCards.length > 0) {
+      finalCards = typedCards;
+    }
+
+    this.filteredCards = finalCards;
   }
 
-  filterCardsByColor(filter: string) {
-    let tempCards: Card[];
-    tempCards = this.allCards; // We don't actually want to mess with the all cards item.
+  filterByCollection(tempCards: Card[]) {
+    tempCards = tempCards.filter((card: Card) => {
+      return (card.owned === 'true');
+    });    
+    return tempCards;
+  }
 
-    this.filteredCards = tempCards.filter((card: Card) => {
+  filterCardsByColor(tempCards: Card[], filter: string) {
+    let retCards: Card[] = tempCards.filter((card: Card) => {
       return (card.card_color === filter);
     });
-    console.log("Temp after filter: ");
-    console.log(this.filteredCards);
+    return retCards;
+  }
+
+  // Begin Filter Methods
+  filterCardsByType(tempCards: Card[], filter: string) {
+    let retCards: Card[] = tempCards.filter((card: Card) => {
+      return (card.card_type === filter);
+    });
+    return retCards;
   }
 
   clearFilter() {
     this.filteredCards = this.allCards;
-    //this.filterCards(this.FILTER_NONE);
+    this.addOwned = false;
+    this.addRed = false;
+    this.addBlue = false;
+    this.addGreen = false;
+    this.addBlack = false;
+    this.addHero = false;
+    this.addCreep = false;
+    this.addSpell = false;
+    this.addImprovement = false;
+    this.addItem = false;
   }
 
-  filterByCollection() {
-    // console.log('Filter by Collection');
-    let tempCards: Card[] = [];
-
-    this.allCards.forEach((card) => {
-        if (card.owned === 'true') {
-          tempCards.push(card);
-        }
-    });
-
-    this.filteredCards = tempCards;
+  toggleOwned() {
+    this.addOwned = !this.addOwned;
   }
 
-  filterByRed() {
-    this.filterCardsByColor(this.FILTER_RED);
+  toggleRed() {
+    this.addRed = !this.addRed;
   }
 
-  filterByBlue() {
-    this.filterCardsByColor(this.FILTER_BLUE);
+  toggleBlue() {
+    this.addBlue = !this.addBlue;
   }
 
-  filterByGreen() {
-    this.filterCardsByColor(this.FILTER_GREEN);
+  toggleGreen() {
+    this.addGreen = !this.addGreen;
   }
 
-  filterByBlack() {
-    this.filterCardsByColor(this.FILTER_BLACK);
+  toggleBlack() {
+    this.addBlack = !this.addBlack;
   }
 
-  filterByHero() {
-    this.filterCardsByType(this.FILTER_HERO);
+  toggleHero() {
+    this.addHero = !this.addHero;
   }
 
-  filterByCreep() {
-    this.filterCardsByType(this.FILTER_CREEP);
+  toggleCreep() {
+    this.addCreep = !this.addCreep;
   }
 
-  filterBySpell() {
-    this.filterCardsByType(this.FILTER_SPELL);
+  toggleSpell() {
+    this.addSpell = !this.addSpell;
   }
 
-  filterByImprovement() {
-    this.filterCardsByType(this.FILTER_IMPROVEMENT);
+  toggleImprovement() {
+    this.addImprovement = !this.addImprovement;
+  }
+
+  toggleItem() {
+    this.addItem = !this.addItem;
   }
   //End Filter Methods
 

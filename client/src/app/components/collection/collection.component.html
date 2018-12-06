@@ -2,20 +2,33 @@
   <mat-card>
     <mat-card-header>
       <mat-card-title>
-        Card Collection
+        Card Collection              
         |
-        <button mat-button color="primary" (click)="clearFilter()">All Cards</button>
-        <button mat-button color="primary" (click)="filterByCollection()">Collection Only</button>
+        <button *ngIf="!this.addOwned" mat-button color="primary" (click)="toggleOwned()">Collection Only</button>
+        <button *ngIf="this.addOwned" mat-button color="accent" (click)="toggleOwned()">Collection Only</button>
         |
-        <button mat-button color="primary" (click)="filterByHero()">Hero</button> 
-        <button mat-button color="primary" (click)="filterByCreep()">Creep</button>
-        <button mat-button color="primary" (click)="filterBySpell()">Spell</button>
-        <button mat-button color="primary" (click)="filterByImprovement()">Improvement</button>
+        <button *ngIf="!this.addHero" mat-button color="primary" (click)="toggleHero()">Hero</button> 
+        <button *ngIf="this.addHero" mat-button color="accent" (click)="toggleHero()">Hero</button> 
+        <button *ngIf="!this.addCreep" mat-button color="primary" (click)="toggleCreep()">Creep</button>
+        <button *ngIf="this.addCreep" mat-button color="accent" (click)="toggleCreep()">Creep</button>
+        <button *ngIf="!this.addSpell" mat-button color="primary" (click)="toggleSpell()">Spell</button>
+        <button *ngIf="this.addSpell" mat-button color="accent" (click)="toggleSpell()">Spell</button>
+        <button *ngIf="!this.addImprovement" mat-button color="primary" (click)="toggleImprovement()">Improvement</button>
+        <button *ngIf="this.addImprovement" mat-button color="accent" (click)="toggleImprovement()">Improvement</button>
+        <button *ngIf="!this.addItem" mat-button color="primary" (click)="toggleItem()">Item</button>
+        <button *ngIf="this.addItem" mat-button color="accent" (click)="toggleItem()">Item</button>
         |
-        <button mat-button color="primary" (click)="filterByRed()">Red</button> 
-        <button mat-button color="primary" (click)="filterByBlue()">Blue</button>
-        <button mat-button color="primary" (click)="filterByGreen()">Green</button>
-        <button mat-button color="primary" (click)="filterByBlack()">Black</button>
+        <button *ngIf="!this.addRed" mat-button color="primary" (click)="toggleRed()">Red</button>
+        <button *ngIf="this.addRed" mat-button color="accent" (click)="toggleRed()">Red</button>
+        <button *ngIf="!this.addBlue" mat-button color="primary" (click)="toggleBlue()">Blue</button>
+        <button *ngIf="this.addBlue" mat-button color="accent" (click)="toggleBlue()">Blue</button>
+        <button *ngIf="!this.addGreen" mat-button color="primary" (click)="toggleGreen()">Green</button>
+        <button *ngIf="this.addGreen" mat-button color="accent" (click)="toggleGreen()">Green</button>
+        <button *ngIf="!this.addBlack" mat-button color="primary" (click)="toggleBlack()">Black</button>
+        <button *ngIf="this.addBlack" mat-button color="accent" (click)="toggleBlack()">Black</button>
+        |
+        <button mat-button color="primary" (click)="applyFilters()">Apply Filter</button>
+        <button mat-button color="warn" (click)="clearFilter()">Clear</button>
       </mat-card-title>    
     </mat-card-header>
     <mat-card-content>
