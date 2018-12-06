@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-let GameRecord = new Schema({
+let Match = new Schema({
     date: {
         type: String,
         default: new Date().getMonth + '/' + new Date().getDay
@@ -24,4 +24,4 @@ let GameRecord = new Schema({
     }
 });
 
-export default mongoose.model('GameRecord', GameRecord, 'gamerecords');
+export default mongoose.model('Match', Match, 'gamerecords');
