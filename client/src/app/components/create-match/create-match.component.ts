@@ -12,22 +12,22 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-game-record-edit-dialog',
-  templateUrl: './game-record-edit-dialog.component.html',
-  styleUrls: ['./game-record-edit-dialog.component.css']
+  selector: 'app-create-match',
+  templateUrl: './create-match.component.html',
+  styleUrls: ['./create-match.component.css']
 })
 
-export class GameRecordEditDialogComponent implements OnInit {
+export class CreateMatchComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<GameRecordEditDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) { 
+  constructor(public dialogRef: MatDialogRef<CreateMatchComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) { 
     console.log(data);
   }
-
+  
   ngOnInit() {
   }
 
-  onUpdateClick(): void {
-    console.log("UPDATING METHOD CALLED");
+  onCreateClick(): void {
+    console.log("CREATE METHOD CALLED");
     this.data.needUpdate = true;
     this.dialogRef.close(this.data);
   }
@@ -37,4 +37,5 @@ export class GameRecordEditDialogComponent implements OnInit {
     this.data.needUpdate = false;    
     this.dialogRef.close(this.data);
   }
+
 }

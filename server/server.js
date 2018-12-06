@@ -22,7 +22,7 @@ connection.once('open', () => {
 //General Routes
 app.use('/', router);
 
-//Card Routes
+//Card Routes; shouldn't be called via client for testing purposes only.
 router.route('/cards').get(CardRoutes.readCards);
 
 //Match Tracker Routes
@@ -32,6 +32,7 @@ router.route('/tracker/update/:id').post(TrackerRoutes.updateMatch);
 router.route('/tracker/delete/:id').get(TrackerRoutes.deleteMatch);
 router.route('/tracker/create').post(TrackerRoutes.createMatch);
 
+//Collection Routes
 router.route('/collection/').get(CollectionRoutes.readCollection);
 router.route('/collection/update/:id').post(CollectionRoutes.updateCollection);
 

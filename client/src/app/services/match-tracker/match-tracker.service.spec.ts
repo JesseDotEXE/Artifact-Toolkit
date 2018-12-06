@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GameRecordService } from './game-record.service';
+import { MatchTrackerService } from './match-tracker.service';
 
-describe('GameRecordService', () => {
+describe('MatchTrackerService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: GameRecordService = TestBed.get(GameRecordService);
+    const service: MatchTrackerService = TestBed.get(MatchTrackerService);
     expect(service).toBeTruthy();
   });
 });

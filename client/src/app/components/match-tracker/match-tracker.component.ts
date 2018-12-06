@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { GameRecord } from '../../services/game-record/game-record.model';
-import { GameRecordService } from '../../services/game-record/game-record.service';
+import { GameRecord } from '../../models/game-record.model';
+import { MatchTrackerService } from '../../services/match-tracker/match-tracker.service';
 import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material'
-import { GameRecordEditDialogComponent } from '../game-record-edit-dialog/game-record-edit-dialog.component';
-import { GameRecordCreateDialogComponent } from '../game-record-create-dialog/game-record-create-dialog.component';
+import { EditMatchComponent } from '../edit-match/edit-match.component';
+import { CreateMatchComponent } from '../create-match/create-match.component';
 
 @Component({
-  selector: 'app-game-record',
-  templateUrl: './game-record.component.html',
-  styleUrls: ['./game-record.component.css']
+  selector: 'app-match-tracker',
+  templateUrl: './match-tracker.component.html',
+  styleUrls: ['./match-tracker.component.css']
 })
 
-export class GameRecordComponent implements OnInit {
+export class MatchTrackerComponent implements OnInit {
   gameRecords: GameRecord[];
   displayedColumns = ['date', 'matchType', 'deck', 'oppDeck', 'outcome', 'notes', 'actions'];
 
@@ -20,7 +20,7 @@ export class GameRecordComponent implements OnInit {
   needUpdate: boolean;
   editId: String;
   
-  constructor(private gameRecordService: GameRecordService, private router: Router, public dialog: MatDialog) { 
+  constructor(private matchTrackerService: MatchTrackerService, private router: Router, public dialog: MatDialog) { 
   }
 
   ngOnInit() {
@@ -28,7 +28,7 @@ export class GameRecordComponent implements OnInit {
   }
 
   getGameRecords() {
-    this.gameRecordService.getGameRecords()
+    this.matchTrackerService.getGameRecords()
       .subscribe((records: GameRecord[]) => {
         this.gameRecords = records;
         //console.log('Game Records: ');
@@ -37,20 +37,20 @@ export class GameRecordComponent implements OnInit {
   }
 
   createRecord(newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes) {
-    this.gameRecordService.createGameRecord(newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes).subscribe(() => {
+    this.matchTrackerService.createGameRecord(newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes).subscribe(() => {
       this.getGameRecords();
     });
   }
 
   deleteRecord(id) {
     console.log("GOING TO DELETE: " + id);
-    this.gameRecordService.deleteGameRecord(id).subscribe(() => {
+    this.matchTrackerService.deleteGameRecord(id).subscribe(() => {
      this.getGameRecords();
     });
   }
 
   updateRecord(id, newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes) {
-    this.gameRecordService.updateGameRecord(id, newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes).subscribe(() => {
+    this.matchTrackerService.updateGameRecord(id, newDate, newMatchType, newDeck, newOppDeck, newOutcome, newNotes).subscribe(() => {
       this.resetEditData();      
       this.getGameRecords();
     });
@@ -58,7 +58,7 @@ export class GameRecordComponent implements OnInit {
 
   //Create Methods
   openCreateDialog(): void {
-    const dialogRef = this.dialog.open(GameRecordCreateDialogComponent, {
+    const dialogRef = this.dialog.open(CreateMatchComponent, {
       width: '500px',
       data: {
         needUpdate: false,
@@ -87,7 +87,7 @@ export class GameRecordComponent implements OnInit {
     this.editId = oldData._id;
     console.log("EDIT ID: " + this.editId);
 
-    const dialogRef = this.dialog.open(GameRecordEditDialogComponent, {
+    const dialogRef = this.dialog.open(EditMatchComponent, {
       width: '500px',
       data: { needUpdate: false,
               oldDate: oldData.date, 

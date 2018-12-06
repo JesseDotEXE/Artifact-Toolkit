@@ -5,8 +5,11 @@ import { AppComponent } from './app.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from "@angular/router";
 import { CollectionComponent } from './components/collection/collection.component';
-import { GameRecordComponent } from './components/game-record/game-record.component';
-import { GameRecordService } from './services/game-record/game-record.service';
+import { MatchTrackerComponent } from './components/match-tracker/match-tracker.component';
+import { MatchTrackerService } from './services/match-tracker/match-tracker.service';
+import { EditMatchComponent } from './components/edit-match/edit-match.component';
+import { CreateMatchComponent } from './components/create-match/create-match.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { CollectionService } from './services/collection/collection.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -21,14 +24,10 @@ import { MatToolbarModule,
          MatGridListModule, 
          MatIconModule,
          MatSelectModule } from "@angular/material";
-import { GameRecordEditDialogComponent } from './components/game-record-edit-dialog/game-record-edit-dialog.component';
-import { GameRecordCreateDialogComponent } from './components/game-record-create-dialog/game-record-create-dialog.component';
-import { CardComponent } from './components/card/card.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routes: Routes = [
   { path: 'collection', component: CollectionComponent },
-  { path: 'tracker', component: GameRecordComponent},
+  { path: 'tracker', component: MatchTrackerComponent},
   { path: '', redirectTo: '/tracker', pathMatch: 'full'}
 ];
 
@@ -36,14 +35,13 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     CollectionComponent,
-    GameRecordComponent,
-    GameRecordEditDialogComponent,
-    GameRecordCreateDialogComponent,
-    CardComponent
+    MatchTrackerComponent,
+    EditMatchComponent,
+    CreateMatchComponent
   ],
   entryComponents: [
-    GameRecordEditDialogComponent,
-    GameRecordCreateDialogComponent
+    EditMatchComponent,
+    CreateMatchComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +64,7 @@ const routes: Routes = [
     MatSelectModule
   ],
   providers: [
-    GameRecordService,
+    MatchTrackerService,
     CollectionService
   ],
   bootstrap: [AppComponent]

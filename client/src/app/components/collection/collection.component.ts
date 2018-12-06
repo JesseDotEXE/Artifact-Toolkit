@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CollectionService } from '../../services/collection/collection.service';
-import { CardCollection } from '../../services/collection/collection.model';
-import { Card } from '../../services/collection/card.model';
+import { Card } from '../../models/card.model';
 
 @Component({
   selector: 'app-collection',
@@ -26,7 +25,8 @@ export class CollectionComponent implements OnInit {
   FILTER_SPELL: string = "Spell";
   FILTER_IMPROVEMENT: string = "Improvement";  
 
-  constructor(private collectionService: CollectionService, private router: Router) { }
+  constructor(private collectionService: CollectionService, private router: Router) { 
+  }
 
   ngOnInit() {
     //this.getCardList();
