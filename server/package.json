@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "babel-watch server.js",
     "start": "babel-watch server.js",
-    "start_forever": "forever node_modules/babel-watch/babel-watch.js server.js"
+    "start_forever": "forever start -c node_modules/.bin/babel-node server.js"
   },
   "keywords": [],
   "author": "",
