@@ -6,7 +6,8 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class CollectionService {
-  uri = 'http://localhost:4000';
+  // localUri = 'localhost:4000';
+  uri = 'http://ec2-18-204-44-138.compute-1.amazonaws.com:4000';
 
   constructor(private http: HttpClient) {
   }
